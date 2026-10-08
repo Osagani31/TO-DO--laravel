@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Jobs\SendWelcomeEmail;
 
 
 class UserController extends Controller
@@ -19,9 +20,17 @@ class UserController extends Controller
 
         $user = User::create($validated);
 
+        SendWelcomeEmail::dispatch($user);
+
         Auth::login($user);
 
         return redirect()->route('home');
+
+       
+
+
+
+
     }
 
     public function login(Request $request)

@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
 
 
 Route::get('/', [TaskController::class, 'index'])
@@ -40,3 +42,11 @@ Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->middleware('
 //user delete
 
 Route::delete('/account', [UserController::class, 'destroy']) ->middleware('auth');
+
+Route::get('/test-email', function () {
+    $user = \App\Models\User::first();
+
+    Mail::to($user->email)->send(new WelcomeMail($user));
+
+    return 'Email sent!';
+});
