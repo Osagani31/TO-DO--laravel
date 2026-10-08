@@ -13,13 +13,43 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      */
-    public function run(): void
+      public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
+        // User 1
+        $user1 = User::factory()->create([
+            'name' => 'test ',
             'email' => 'test@example.com',
+            'password' => 'password123',
+
         ]);
-    }
+
+        // User 2
+        $user2 = User::factory()->create([
+            'name' => 'test2',
+            'email' => 'test2@example.com',
+            'password' => 'password123456',
+
+        ]);
+
+        // User 1 -> 2 Tasks
+        $user1->tasks()->createMany([
+            ['title' => 'Learn Laravel',],
+            ['title' => 'Build To-Do App',  ],
+
+
+        ]);
+
+        // User 2 -> 4 Tasks
+        $user2->tasks()->createMany([
+            ['title' => 'Study PHP', ],
+            ['title' => 'Learn MySQL',],
+            ['title' => 'Practice ',],
+            ['title' => 'Learn Redis',],
+
+
+        ]);
+
+
+   
+        }
 }
